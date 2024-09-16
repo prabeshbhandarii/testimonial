@@ -12,3 +12,54 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+
+model User {
+  id           Int           @id @default(autoincrement())
+  email        String        @unique
+  provider     Provider
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @default(now())
+  spaces       Space[]
+  testimonials Testimonial[]
+}
+
+model Space {
+  id           Int           @id @default(autoincrement())
+  userId       Int
+  createdAt    DateTime      @default(now())
+  description  String
+  name         String
+  updatedAt    DateTime      @default(now())
+  message      String
+  questions    Question[]
+  user         User          @relation(fields: [userId], references: [id])
+  testimonials Testimonial[]
+}
+
+model Testimonial {
+  id        Int      @id @default(autoincrement())
+  content   String
+  spaceId   Int
+  authorId  Int
+  name      String
+  email     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  author    User     @relation(fields: [authorId], references: [id])
+  space     Space    @relation(fields: [spaceId], references: [id])
+}
+
+model Question {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  spaceId   Int
+  content   String[]
+  space     Space    @relation(fields: [spaceId], references: [id])
+}
+
+
+enum Provider {
+  Google
+}
