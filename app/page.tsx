@@ -1,10 +1,9 @@
-"use client"
-import Appbar from "./components/Appbar";
+import { AppbarClient } from "./components/AppbarClient";
 
 export default function Home() {
   return (
     <main>
-      <Appbar />
+      <AppbarClient />
       Hi there!
     </main>
   );
