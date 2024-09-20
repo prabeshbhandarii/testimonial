@@ -1,6 +1,6 @@
 const Spaces = () => {
   return (
-    <div className="mb-8 text-white">
+    <div className="mb-8 text-white p-10">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-bold">Spaces</h2>
       </div>

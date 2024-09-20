@@ -1,6 +1,6 @@
 export default function Overview (){
     return(
-        <div className="mb-8 text-white">
+        <div className="mb-8 text-white p-10">
       <h2 className="text-2xl font-bold mb-4">Overview</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="bg-gray-800 p-4 rounded-lg">

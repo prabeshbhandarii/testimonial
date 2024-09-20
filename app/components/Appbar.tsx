@@ -1,7 +1,7 @@
 import { useSession } from "next-auth/react"
 import { Logout } from "./Logout"
 import { Login } from "./Login"
-import { Dashboard } from "./Dashboard"
+import { GoToDashboard } from "./GoToDashboard"
 
 const Appbar = () => {
     const session = useSession()
@@ -24,7 +24,7 @@ const Appbar = () => {
                 <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
                     {!session.data?.user && <Login />}
                     {session.data?.user && <Logout />}
-                    {session.data?.user && <Dashboard />}
+                    {session.data?.user && <GoToDashboard />}
                 </ul>
             </div>
         </div>
