@@ -1,7 +1,7 @@
 "use client"
 import Appbar from "./Appbar";
 
-export const AppbarClient = ()=>{
+export default function AppbarClient (){
     return(
         <Appbar />
     )

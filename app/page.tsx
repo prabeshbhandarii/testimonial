@@ -1,10 +1,14 @@
-import { AppbarClient } from "./components/AppbarClient";
+import AppbarClient from "./components/AppbarClient";
+import Footer from "./components/Footer";
 
 export default function Home() {
   return (
-    <main>
+    <>
       <AppbarClient />
-      Hi there!
-    </main>
+      <main className="max-w-5xl mx-auto px-4 py-8">
+        Hi there!
+        <Footer />
+      </main>
+    </>
   );
 }

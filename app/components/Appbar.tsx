@@ -1,12 +1,13 @@
 import { useSession } from "next-auth/react"
 import { Logout } from "./Logout"
 import { Login } from "./Login"
+import { Dashboard } from "./Dashboard"
 
 const Appbar = () => {
     const session = useSession()
     return (
     <header>
-    <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
+    <nav className="border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-900">
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
             <a href="/" className="flex items-center">
                 <img className="mr-3 h-6 sm:h-9" src="https://flowbite.com/docs/images/logo.svg" alt="Testimonial Logo" />
@@ -23,6 +24,7 @@ const Appbar = () => {
                 <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
                     {!session.data?.user && <Login />}
                     {session.data?.user && <Logout />}
+                    {session.data?.user && <Dashboard />}
                 </ul>
             </div>
         </div>
