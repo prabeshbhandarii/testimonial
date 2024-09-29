@@ -15,18 +15,62 @@ datasource db {
 
 
 model User {
-  id           Int           @id @default(autoincrement())
-  email        String        @unique
-  provider     Provider
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @default(now())
-  spaces       Space[]
-  testimonials Testimonial[]
+  id            String    @id @default(uuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  spaces        Space[]
+  testimonials  Testimonial[]
+  accounts      Account[]
+  sessions      Session[]
 }
 
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+ 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  @@id([provider, providerAccountId])
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+ 
+  @@id([identifier, token])
+}
+
+
 model Space {
-  id           Int           @id @default(autoincrement())
-  userId       Int
+  id           String           @id @default(uuid())
+  userId       String
   createdAt    DateTime      @default(now())
   description  String
   name         String
@@ -40,8 +84,8 @@ model Space {
 model Testimonial {
   id        Int      @id @default(autoincrement())
   content   String
-  spaceId   Int
-  authorId  Int
+  spaceId   String
+  authorId  String
   name      String
   email     String
   createdAt DateTime @default(now())
@@ -54,12 +98,7 @@ model Question {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
-  spaceId   Int
+  spaceId   String
   content   String[]
   space     Space    @relation(fields: [spaceId], references: [id])
-}
-
-
-enum Provider {
-  Google
 }

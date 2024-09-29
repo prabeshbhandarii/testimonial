@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { getToken } from "next-auth/jwt";
+import { getServerSession } from "next-auth";
 import { prisma } from "@/app/lib/db";
+import { authOptions } from "../auth/[...nextauth]/route";
 
 const spaceBodySchema = z.object({
     name: z.string(),
@@ -12,22 +13,32 @@ const spaceBodySchema = z.object({
 export async function POST(req: NextRequest){
     try {
         const spaceBody = await req.json()
-        spaceBodySchema.safeParse(spaceBody)
-        const token = await getToken({req})
-        if(!token || !token.sub){
+        const parsedBody = spaceBodySchema.safeParse(spaceBody)
+
+        if(!parsedBody.success){
             return NextResponse.json({
-                msg: "Token not provided"
+                msg: "invalid input"
             })
         }
-        const userId = parseInt(token?.sub)
+
+        const session = await getServerSession(authOptions)
+        if(!session || !session.user?.id){
+            return NextResponse.json({
+                msg: "Unauthorized"
+            }, { status: 401 })
+        }
+        const userId = session.user.id
+
         const response = await prisma.space.create({
             data: {
                 userId: userId,
-                name: spaceBody.name,
-                description: spaceBody.description,
-                message: spaceBody.message
+                name: parsedBody.data.name,
+                description: parsedBody.data.description,
+                message: parsedBody.data.message
             }
         })
+        const spaceId = response.id
+
         return(
             NextResponse.json({
                 msg: "Space created successfully",
@@ -35,10 +46,13 @@ export async function POST(req: NextRequest){
             })
         )
     } catch (err) {
-        NextResponse.json({
+        console.error(err)
+        return (
+            NextResponse.json({
             err: "error creating space. " + err
         }, {
-            status: 411
+            status: 500
         })
+    )
     }
 }
