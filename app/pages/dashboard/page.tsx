@@ -7,10 +7,6 @@ import DashboardComponent from "@/app/components/DashboardComponent"
 export default function Dashboard () {
     const [createSpace, setCreateSpace] = useState(false)
     return (
-        // <DashboardComponent>
-        //     { !createSpace && <CreateSpaceButton setCreateSpace={setCreateSpace} /> }
-        //     { createSpace && <CreateSpaceForm /> }
-        // </DashboardComponent>
         <>
             { !createSpace && 
                 <DashboardComponent>

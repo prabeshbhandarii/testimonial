@@ -44,9 +44,6 @@ const CreateSpaceForm = () => {
       e.preventDefault();
       const newSpace = await axios.post("http://localhost:3000/api/space", spaceData)
       const spaceId = newSpace.data.data.id
-      //consolelog
-      console.log("newSpace Created")
-      console.log(newSpace.data.data.id)
 
       const questionData = {
         spaceId: spaceId,
