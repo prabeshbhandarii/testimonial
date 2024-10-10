@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import axios from "axios"
-import { prisma } from '../lib/db';
 
 interface SpaceData{
   name: string, 
@@ -12,7 +11,11 @@ interface QuestionData{
   content: string;
 }
 
-const CreateSpaceForm = () => {
+interface CreateSpaceButtonProps {
+  setCreateSpace: (value: boolean) => void;
+}
+
+const CreateSpaceForm = ({ setCreateSpace }: CreateSpaceButtonProps) => {
   const [spaceData, setSpaceData] = useState<SpaceData>({
     name: '',
     description: '',
@@ -27,7 +30,7 @@ const CreateSpaceForm = () => {
 
   const handleSpaceDataChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
-    setSpaceData(prevData => ({ ...prevData, [name]: value }));
+    setSpaceData(prevData => ({ ...prevData, [name]: name === 'name' ? value.replace(/\s+/g, '') : value }));
   };
 
   const handleQuestionChange = (index: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,7 +54,7 @@ const CreateSpaceForm = () => {
       }
 
       const newQuestion = await axios.post("http://localhost:3000/api/question", questionData)
-      
+      setCreateSpace(false)
     } catch (err) {
       console.error("could not create space" + err)
     }

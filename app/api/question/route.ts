@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/app/lib/db";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]/route";
 
 const questionBodySchema = z.object({
     spaceId: z.string(),
@@ -39,6 +41,31 @@ export async function POST(req: NextRequest){
             err: "error creating questions. " + err
         }, {
             status: 411
+        })
+    }
+}
+
+export async function GET(req: NextRequest) {
+    try {
+        const spaceId = req.headers.get('spaceId') || ''
+        const session = await getServerSession(authOptions)
+        if(!session || !session.user?.id){
+            return NextResponse.json({
+                msg: "unauthorised"
+            }, {status: 401})
+        }
+        const response = await prisma.question.findMany({
+            where:{
+                spaceId: spaceId
+            }
+        })
+
+        return NextResponse.json({
+            data: response[0].content
+        })
+    } catch (err) {
+        return NextResponse.json({
+            err: err
         })
     }
 }

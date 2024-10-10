@@ -1,6 +1,7 @@
-import { useState } from 'react';
+"use client"
+import { useEffect, useState } from 'react';
 import axios from "axios"
-import { log } from 'console';
+import { usePathname } from 'next/navigation';
 
 interface TestimonialData{
   name: string, 
@@ -9,16 +10,47 @@ interface TestimonialData{
   spaceId: string
 }
 
+interface CreateTesimonialButtonProp {
+  space: {
+    name: string,
+    description: string,
+    message: string
+  };
+  questions: string[]
+}
 
-const CreateTestimonialForm = () => {
+const CreateTestimonialForm = ({ space, questions }: CreateTesimonialButtonProp) => {
+  
   const [testimonialData, setTestimonialData] = useState<TestimonialData>({
     content: '',
     name: '',
     email: '',
     spaceId: ''
-});
+  });
 
-const handleTestimonialDataChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const [spaceId, setSpaceId] = useState<string>('');
+
+  const url = usePathname()
+  const spaceName = url.split('/')[2]
+
+  useEffect(()=>{
+    const fetchData = async ()=>{
+      try {
+        const space = await axios.get(`http://localhost:3000/api/space/${spaceName}`, {
+          headers: {
+            'spaceName': spaceName
+          }
+        })
+
+        setSpaceId(space.data.data.id)
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchData()
+  }, [])
+
+  const handleTestimonialDataChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setTestimonialData((prevData) => ({ ...prevData, [name]: value }));
   };
@@ -26,12 +58,11 @@ const handleTestimonialDataChange = (e: React.ChangeEvent<HTMLInputElement | HTM
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
-      const userSpaceId = await axios.get("http://localhost:3000/api/space")
-      const spaceId = userSpaceId.data.data.id
-      
-      setTestimonialData((prevData)=>({...prevData, spaceId: spaceId}))
-
-      const newTestimonial = await axios.post("http://localhost:3000/api/testimonial", testimonialData)
+      const newTestimonial = await axios.post("http://localhost:3000/api/testimonial", testimonialData, {
+        headers: {
+          'spaceId': spaceId
+        }
+      })
       
     }catch (err) {
       console.error("could not create testimonial" + err)
@@ -40,6 +71,10 @@ const handleTestimonialDataChange = (e: React.ChangeEvent<HTMLInputElement | HTM
 
   return (
     <div className="max-w-2xl mx-auto bg-gray-800 p-6 rounded-lg mt-5">
+      <h1 className='text-white text-5xl'>{space.name}</h1>
+      {questions.map((question, index)=>{
+        return <p key={index} className='text-lg text-white'>{question}</p>
+      })}
       <h2 className="text-2xl font-bold mb-4 text-white">Create a testimonial</h2>
       <form onSubmit={handleSubmit}>
       <div className="mb-4">
@@ -61,4 +96,4 @@ const handleTestimonialDataChange = (e: React.ChangeEvent<HTMLInputElement | HTM
   );
 };
 
-export default CreateTestimonialForm;
+export default CreateTestimonialForm

@@ -67,7 +67,7 @@ export async function GET(){
             }, { status: 401 })
         }
 
-        const response = await prisma.space.findFirst({
+        const response = await prisma.space.findMany({
             where: {
                 userId: userId
             }

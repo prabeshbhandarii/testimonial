@@ -73,7 +73,7 @@ model Space {
   userId       String
   createdAt    DateTime      @default(now())
   description  String
-  name         String
+  name         String        @unique
   updatedAt    DateTime      @default(now())
   message      String
   questions    Question[]

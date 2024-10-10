@@ -2,11 +2,21 @@
 
 interface CreateTesimonialButtonProp {
   setCreateTestimonial: (value: boolean) => void;
+  space: {
+    name: string,
+    description: string,
+    message: string
+  };
+  questions: string[]
 }
 
-export default function AskTestimonial({ setCreateTestimonial }: CreateTesimonialButtonProp) {
+export default function AskTestimonial({ setCreateTestimonial, space, questions }: CreateTesimonialButtonProp) {
   return (
     <div>
+      <h1 className="text-5xl text-white">{space.name}</h1>
+      {questions.map((question, index)=>{
+        return <p className="text-lg text-white" key={index}>{question}</p>
+      })}
       <button 
         onClick={() => setCreateTestimonial(true)}
         className="text-gray-200 hover:text-gray-100 bg-blue-700

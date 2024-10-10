@@ -13,7 +13,7 @@ export default function Dashboard () {
                     <CreateSpaceButton setCreateSpace={setCreateSpace} />
                 </DashboardComponent>
             }
-            { createSpace && <CreateSpaceForm /> }
+            { createSpace && <CreateSpaceForm setCreateSpace={setCreateSpace} /> }
         </>
     )
 }
