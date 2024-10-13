@@ -61,7 +61,7 @@ export async function GET(req: NextRequest){
                 msg: "unauthorized"
             })
         }
-        
+
         const response = await prisma.testimonial.findMany({
             where: {
                 spaceId: spaceId,
@@ -72,6 +72,43 @@ export async function GET(req: NextRequest){
         return NextResponse.json({
             msg: "done",
             data: response
+        })
+    } catch (err) {
+        return NextResponse.json({
+            err: err
+        })
+    }
+}
+
+export async function PUT(req: NextRequest) {
+    try {
+        const session = await getServerSession(authOptions)
+        const body = await req.json()
+        if(!session || !session.user?.id){
+            return NextResponse.json({
+                msg: "unauthorized"
+            }, {
+                status: 401
+            })
+        }
+
+        const findTestimonial = await prisma.testimonial.findFirst({
+            where: {
+                id: body.testimonialId
+            }
+        })
+
+        const updatedTestimonial = await prisma.testimonial.update({
+            where: {
+                id: body.testimonialId
+            }, 
+            data: {
+                liked: !findTestimonial?.liked
+            }
+        })
+        return NextResponse.json({
+            msg: 'testimonial added to wall of love',
+            data: updatedTestimonial
         })
     } catch (err) {
         return NextResponse.json({

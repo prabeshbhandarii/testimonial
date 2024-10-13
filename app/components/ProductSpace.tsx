@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Search, Star, Heart, Award } from 'lucide-react';
 import axios from 'axios';
 import Link from 'next/link';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 interface SpaceData{
   id: string,
@@ -12,28 +12,32 @@ interface SpaceData{
   message: string;
 }
 
+interface Testimonial {
+  id: number,
+  name: string,
+  email: string,
+  content: string,
+  liked: boolean
+}
+
 const ProductSpace = () => {
   const url = usePathname()
   const spaceName = url.split('/')[3]
   
   const [searchTerm, setSearchTerm] = useState('');
-  const [testimonials, setTestimonials] = useState([{
-    id: '',
-    name: '',
-    email: '',
-    content: ''
-  }])
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([])
   const [spaceData, setSpaceData] = useState<SpaceData>({
     id: '',
     name: '',
     description: '',
     message: ''
   });
+  const [isLiked, setIsLiked] = useState()
 
   const sidebarItems = [
     { icon: <Star size={20} />, label: 'All' },
     { icon: <Award size={20} />, label: 'Featured' },
-    { icon: <Heart size={20} />, label: 'Liked' },
+    { icon: <Heart size={20} />, label: 'Wall of Love' },
   ];
 
   useEffect(()=>{
@@ -62,16 +66,31 @@ const ProductSpace = () => {
           })
 
           setTestimonials(
-            testimonial.data.data
+            testimonial.data.data.map((t:any)=>({...t, liked: false}))
           )
 
-        }        
+        }
       } catch (error) {
         console.error(error);
       }
     }
     fetchData()
   }, [spaceName])
+
+  const handleLike = async (testimonialId: number)=>{
+    try {
+      const response = await axios.put('http://localhost:3000/api/testimonial', { testimonialId });
+      const updatedLiked = response.data.data.liked;
+    
+      setTestimonials(prevTestimonials =>
+        prevTestimonials.map(t =>
+          t.id === testimonialId ? {...t, liked: updatedLiked} : t
+        )
+      );
+    } catch (err) {
+      console.error(err)
+    }
+  }
 
   return (
     <div className="flex h-screen bg-gray-900 text-white">
@@ -121,16 +140,14 @@ const ProductSpace = () => {
                   <p className="mt-2">{testimonial.content}</p>
                 </div>
                 <div className="flex space-x-2">
-                  <button className="text-blue-400 hover:text-blue-300">
-                    <Award size={20} />
-                  </button>
-                  <button className="text-red-400 hover:text-red-300">
-                    <Heart size={20} />
+                  <button onClick={()=>handleLike(testimonial.id)} className="text-red-400 hover:text-red-300">
+                    {!testimonial.liked && <Heart color="#f7f7f7" strokeWidth={0.5} />}
+                    {testimonial.liked && <Heart color="#ff0000" strokeWidth={3} />}
                   </button>
                 </div>
               </div>
               <div className="text-sm text-gray-400">
-                {testimonials[0].content}
+                {testimonial.content}
                 <p>Name: {testimonial.name}</p>
                 <p>Email: {testimonial.email}</p>
               </div>
