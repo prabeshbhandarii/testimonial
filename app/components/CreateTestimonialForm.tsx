@@ -1,6 +1,7 @@
 "use client"
 import { useEffect, useState } from 'react';
 import axios from "axios"
+//@ts-ignore
 import { usePathname } from 'next/navigation';
 
 interface TestimonialData{
@@ -48,7 +49,7 @@ const CreateTestimonialForm = ({ space, questions }: CreateTesimonialButtonProp)
       }
     }
     fetchData()
-  }, [])
+  }, [spaceName])
 
   const handleTestimonialDataChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -58,7 +59,7 @@ const CreateTestimonialForm = ({ space, questions }: CreateTesimonialButtonProp)
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
-      const newTestimonial = await axios.post("http://localhost:3000/api/testimonial", testimonialData, {
+      await axios.post("http://localhost:3000/api/testimonial", testimonialData, {
         headers: {
           'spaceId': spaceId
         }

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Search, Star, Heart, Award } from 'lucide-react';
 import axios from 'axios';
 import Link from 'next/link';
+//@ts-ignore
 import { usePathname } from 'next/navigation';
 
 interface SpaceData{
@@ -22,7 +23,7 @@ interface Testimonial {
 
 const ProductSpace = () => {
   const url = usePathname()
-  const spaceName = url.split('/')[3]
+  const spaceName = url?.split('/')[3] || ''
   
   const [searchTerm, setSearchTerm] = useState('');
   const [testimonials, setTestimonials] = useState<Testimonial[]>([])
@@ -65,7 +66,7 @@ const ProductSpace = () => {
           })
 
           setTestimonials(
-            testimonial.data.data.map((t:any)=>({...t, liked: false}))
+            testimonial.data.data.map((t: Testimonial)=>({...t, liked: false}))
           )
 
         }
@@ -98,8 +99,8 @@ const ProductSpace = () => {
         <h2 className="text-xl font-bold mb-4">Testimonial</h2>
         <ul>
           {sidebarItems.map((item, index) => (
-            <Link href={item.href}>
-            <li key={index} className="flex items-center space-x-2 py-2 px-4 hover:bg-gray-700 rounded">
+            <Link key={index} href={item.href}>
+            <li className="flex items-center space-x-2 py-2 px-4 hover:bg-gray-700 rounded">
               {item.icon}
               <span>{item.label}</span>
             </li>
@@ -129,7 +130,7 @@ const ProductSpace = () => {
 
         {/* Testimonial cards */}
         <div className="space-y-4">
-          {testimonials.map((testimonial: any, index) => (
+          {testimonials.map((testimonial: Testimonial, index) => (
             <div key={index} className="bg-gray-800 rounded-lg p-4">
               <div className="flex justify-between items-start mb-2">
                 <div>
@@ -138,7 +139,6 @@ const ProductSpace = () => {
                       <Star key={i} size={16} className="text-yellow-400 fill-current" />
                     ))}
                   </div> */}
-                  <p className="mt-2">{testimonial.content}</p>
                 </div>
                 <div className="flex space-x-2">
                   <button onClick={()=>handleLike(testimonial.id)} className="text-red-400 hover:text-red-300">

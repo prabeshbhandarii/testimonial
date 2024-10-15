@@ -53,7 +53,7 @@ const CreateSpaceForm = ({ setCreateSpace }: CreateSpaceButtonProps) => {
         questions: questions.map(q => ({content: q.content}))
       }
 
-      const newQuestion = await axios.post("http://localhost:3000/api/question", questionData)
+      await axios.post("http://localhost:3000/api/question", questionData)
       setCreateSpace(false)
     } catch (err) {
       console.error("could not create space" + err)

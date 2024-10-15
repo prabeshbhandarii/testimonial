@@ -1,4 +1,5 @@
 "use client"
+//@ts-ignore
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
@@ -10,7 +11,7 @@ export default function PrivateRoute({ children }: { children: React.ReactNode }
   useEffect(() => {
     if (status === 'loading') return;
     if (!session) router.push('/');
-  }, [session]);
+  }, [router, session]);
 
   if (status === 'loading') {
     return <div>Loading...</div>;

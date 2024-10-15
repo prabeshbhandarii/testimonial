@@ -1,26 +1,8 @@
 "use client"
-import { useState, useEffect } from 'react';
-// import { useRouter } from "next/router";
+import { useState } from 'react';
 
 export default function TestimonialClient({space}: {space: string}) {
-  // const [space, setSpace] = useState<string | null>(null);
   const [testimonial, setTestimonial] = useState('');
-  // const router = useRouter()
-
-//   useEffect(() => {
-//     if (router.isReady) {
-//       setSpace(router.query.space as string);
-//     }
-//   }, [router.isReady, router.query.space])
-
-
-// useEffect(()=>{
-//     if(space){
-//         setSpace(space)
-//     }
-// },[space])
-
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
   };

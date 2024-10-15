@@ -1,5 +1,6 @@
 "use client"
 import axios from 'axios';
+//@ts-ignore
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
   
@@ -38,7 +39,7 @@ const WallOfLove = () => {
 
                     setTestimonials(
                       testimonial.data.data
-                        .filter((t:any)=>t.liked).map((t:any)=>t)
+                        .filter((t:Testimonial)=>t.liked).map((t:Testimonial)=>t)
                     )
                 }
             }
@@ -46,7 +47,7 @@ const WallOfLove = () => {
         } catch (err) {
             console.error(err)
         }
-    }, [])
+    }, [spaceName])
 
   return (
     <div className="min-h-screen bg-gray-900 text-white py-12 px-4 sm:px-6 lg:px-8">
