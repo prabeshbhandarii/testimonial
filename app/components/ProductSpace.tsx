@@ -32,12 +32,11 @@ const ProductSpace = () => {
     description: '',
     message: ''
   });
-  const [isLiked, setIsLiked] = useState()
 
   const sidebarItems = [
-    { icon: <Star size={20} />, label: 'All' },
-    { icon: <Award size={20} />, label: 'Featured' },
-    { icon: <Heart size={20} />, label: 'Wall of Love' },
+    { icon: <Star size={20} />, label: 'All', href: '' },
+    { icon: <Award size={20} />, label: 'Featured', href: '' },
+    { icon: <Heart size={20} />, label: 'Embed Wall of Love', href: `http://localhost:3000/pages/w` },
   ];
 
   useEffect(()=>{
@@ -99,10 +98,12 @@ const ProductSpace = () => {
         <h2 className="text-xl font-bold mb-4">Testimonial</h2>
         <ul>
           {sidebarItems.map((item, index) => (
+            <Link href={item.href}>
             <li key={index} className="flex items-center space-x-2 py-2 px-4 hover:bg-gray-700 rounded">
               {item.icon}
               <span>{item.label}</span>
             </li>
+            </Link>
           ))}
         </ul>
       </div>
