@@ -1,5 +1,5 @@
 "use client"
-//@ts-ignore
+//@ts-expect-error
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
