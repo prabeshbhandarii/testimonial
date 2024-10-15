@@ -1,7 +1,7 @@
 "use client"
 import { useEffect, useState } from 'react';
 import axios from "axios"
-//@ts-expect-error
+//@ts-expect-error: idk type error
 import { usePathname } from 'next/navigation';
 
 interface TestimonialData{

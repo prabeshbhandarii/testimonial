@@ -1,5 +1,5 @@
 "use client"
-//@ts-expect-error
+//@ts-expect-error: idk type error
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
@@ -11,7 +11,7 @@ export default function PrivateRoute({ children }: { children: React.ReactNode }
   useEffect(() => {
     if (status === 'loading') return;
     if (!session) router.push('/');
-  }, [router, session]);
+  }, [router, status, session]);
 
   if (status === 'loading') {
     return <div>Loading...</div>;

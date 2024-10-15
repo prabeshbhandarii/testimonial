@@ -1,6 +1,6 @@
 "use client"
 import axios from 'axios';
-//@ts-expect-error
+//@ts-expect-error: idk type error
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
   
