@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { Search, Star, Heart, Award } from 'lucide-react';
 import axios from 'axios';
 import Link from 'next/link';
-//@ts-expect-error: idk type error
 import { usePathname } from 'next/navigation';
 
 interface SpaceData{
