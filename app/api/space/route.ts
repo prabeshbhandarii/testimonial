@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { getServerSession } from "next-auth";
 import { prisma } from "@/app/lib/db";
-import { authOptions } from "../auth/[...nextauth]/route";
+import { authOptions } from "@/app/utils/auth";
 
 const spaceBodySchema = z.object({
     name: z.string(),

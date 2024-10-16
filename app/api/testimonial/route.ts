@@ -2,7 +2,7 @@ import { prisma } from "@/app/lib/db";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { authOptions } from "../auth/[...nextauth]/route";
+import { authOptions } from "@/app/utils/auth";
 
 const testimonialSchema = z.object({
     content: z.string(),
