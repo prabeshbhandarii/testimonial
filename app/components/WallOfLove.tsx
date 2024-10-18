@@ -21,7 +21,7 @@ const WallOfLove = () => {
     useEffect(()=>{
         try {
             const fetchData = async ()=>{
-                const space = await axios.get(`http://localhost:3000/api/space/${spaceName}`, {
+                const space = await axios.get(`${process.env.NEXTAUTH_URL}/api/space/${spaceName}`, {
                     headers: {
                       'spaceName': spaceName
                     }
@@ -30,7 +30,7 @@ const WallOfLove = () => {
                   const fetchedSpaceData = space.data.data;                  
           
                   if(fetchedSpaceData.id){
-                    const testimonial = await axios.get('http://localhost:3000/api/testimonial', {
+                    const testimonial = await axios.get(`${process.env.NEXTAUTH_URL}/api/testimonial`, {
                       headers: {
                         'spaceId': fetchedSpaceData.id
                       }
