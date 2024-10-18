@@ -45,7 +45,7 @@ const CreateSpaceForm = ({ setCreateSpace }: CreateSpaceButtonProps) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
-      const newSpace = await axios.post(`/api/space`, spaceData)
+      const newSpace = await axios.post(`${process.env.NEXTAUTH_URL}/api/space`, spaceData)
       const spaceId = newSpace.data.data.id
 
       const questionData = {
