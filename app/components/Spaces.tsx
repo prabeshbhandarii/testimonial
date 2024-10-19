@@ -13,7 +13,7 @@ const Spaces = () => {
   const [spaces, setSpaces] = useState([])
 
   useEffect(()=>{
-    axios.get(`/api/space`).then(
+    axios.get(`${process.env.NEXTAUTH_URL}/api/space`).then(
       (spaces)=>{
         setSpaces(spaces.data.data)
       },
