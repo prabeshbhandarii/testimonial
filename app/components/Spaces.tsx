@@ -32,7 +32,7 @@ const Spaces = () => {
           {spaces.map((space: Space, index)=>{
             return(
               <div key={index} className="bg-gray-800 p-4 rounded-lg">
-                <Link href={`${process.env.NEXTAUTH_URL}/pages/products/${space.name}`}>{space.name}</Link>
+                <Link href={`/pages/products/${space.name}`}>{space.name}</Link>
               </div>
             )
           })}
