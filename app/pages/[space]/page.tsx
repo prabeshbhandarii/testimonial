@@ -17,6 +17,9 @@ interface SpaceData{
 export default function TestimonialForm(){
   const url = usePathname()
   const spaceName = url.split('/')[2]
+  console.log(url)
+  console.log(spaceName);
+  
   const [createTestimonial, setCreateTestimonial] = useState(false)
   const [spaceData, setSpaceData] = useState<SpaceData>({
     id: '',
