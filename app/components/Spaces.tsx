@@ -13,7 +13,7 @@ const Spaces = () => {
   const [spaces, setSpaces] = useState([])
 
   useEffect(()=>{
-    axios.get(`api/space`).then(
+    axios.get(`/`).then(
       (spaces)=>{
         setSpaces(spaces.data.data)
       },
