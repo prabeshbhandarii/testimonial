@@ -45,7 +45,7 @@ export default function TestimonialForm(){
         });
 
         if(fetchedSpaceData.id){
-          const question = await axios.get(`${process.env.NEXTAUTH_URL}/api/question`, {
+          const question = await axios.get(`api/question`, {
             headers: {
               'spaceId': space.data.data.id
             }
