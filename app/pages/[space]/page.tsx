@@ -29,7 +29,7 @@ export default function TestimonialForm(){
   useEffect(()=>{
     const fetchData = async ()=>{
       try {
-        const space = await axios.get(`${process.env.NEXTAUTH_URL}/api/space/${spaceName}`, {
+        const space = await axios.get(`/api/space/${spaceName}`, {
           headers: {
             'spaceName': spaceName
           }
