@@ -29,12 +29,12 @@ export default function TestimonialForm(){
   useEffect(()=>{
     const fetchData = async ()=>{
       try {
-        const space = await axios.get(`api/space/${spaceName}`, {
+        const space = await axios.get(`/`, {
           headers: {
             'spaceName': spaceName
           }
         })
-
+//api/space/${spaceName}
         const fetchedSpaceData = space.data.data;
         
         setSpaceData({
