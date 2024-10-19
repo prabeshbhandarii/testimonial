@@ -17,6 +17,7 @@ interface SpaceData{
 export default function TestimonialForm(){
   const url = usePathname()
   const spaceName = url.split('/')[2]
+  console.log("url")
   console.log(url)
   console.log(spaceName);
   
