@@ -42,7 +42,7 @@ const ProductSpace = () => {
   useEffect(()=>{
     const fetchData = async ()=>{
       try {
-        const space = await axios.get(`${process.env.NEXTAUTH_URL}/api/space/${spaceName}`, {
+        const space = await axios.get(`/api/space/${spaceName}`, {
           headers: {
             'spaceName': spaceName
           }
@@ -58,7 +58,7 @@ const ProductSpace = () => {
         });
 
         if(fetchedSpaceData.id){
-          const testimonial = await axios.get(`${process.env.NEXTAUTH_URL}/api/testimonial`, {
+          const testimonial = await axios.get(`/api/testimonial`, {
             headers: {
               'spaceId': space.data.data.id
             }
@@ -78,7 +78,7 @@ const ProductSpace = () => {
 
   const handleLike = async (testimonialId: number)=>{
     try {
-      const response = await axios.put(`${process.env.NEXTAUTH_URL}/api/testimonial`, { testimonialId });
+      const response = await axios.put(`/api/testimonial`, { testimonialId });
       const updatedLiked = response.data.data.liked;
     
       setTestimonials(prevTestimonials =>
@@ -114,7 +114,7 @@ const ProductSpace = () => {
       {/* Main content */}
       <div className="flex-1 p-8">
         <strong className='text-white text-3xl m-2'>{spaceData.name}</strong><br />
-        <Link href={`/${spaceData.name}`}>Space public url: {process.env.NEXTAUTH_URL}/pages/{spaceData.name}</Link>
+        <Link href={`/${spaceData.name}`}>Space public url: {process.env.NEXT_PUBLIC_NEXTAUTH_URL}/pages/{spaceData.name}</Link>
         {/* Search bar */}
         <div className="mb-6 relative">
           <input
