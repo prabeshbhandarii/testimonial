@@ -29,7 +29,7 @@ export default function TestimonialForm(){
   useEffect(()=>{
     const fetchData = async ()=>{
       try {
-        const space = await axios.get(`${process.env.NEXTAUTH_URL}/api/space/${spaceName}`, {
+        const space = await axios.get(`/api/space/${spaceName}`, {
           headers: {
             'spaceName': spaceName
           }
@@ -45,7 +45,7 @@ export default function TestimonialForm(){
         });
 
         if(fetchedSpaceData.id){
-          const question = await axios.get(`${process.env.NEXTAUTH_URL}/api/question`, {
+          const question = await axios.get(`/api/question`, {
             headers: {
               'spaceId': space.data.data.id
             }

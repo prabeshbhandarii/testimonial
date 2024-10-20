@@ -36,7 +36,7 @@ const ProductSpace = () => {
   const sidebarItems = [
     { icon: <Star size={20} />, label: 'All', href: '' },
     { icon: <Award size={20} />, label: 'Featured', href: '' },
-    { icon: <Heart size={20} />, label: 'Embed Wall of Love', href: `/w` },
+    { icon: <Heart size={20} />, label: 'Embed Wall of Love', href: `/pages/w` },
   ];
 
   useEffect(()=>{
@@ -114,7 +114,8 @@ const ProductSpace = () => {
       {/* Main content */}
       <div className="flex-1 p-8">
         <strong className='text-white text-3xl m-2'>{spaceData.name}</strong><br />
-        <Link href={`/${spaceData.name}`}>Space public url: {process.env.NEXT_PUBLIC_NEXTAUTH_URL}/pages/{spaceData.name}</Link>
+        <Link href={`/pages/${spaceData.name}`}>Space public url: 
+        https://testimonial-e28m.vercel.app/pages/{spaceData.name}</Link>
         {/* Search bar */}
         <div className="mb-6 relative">
           <input

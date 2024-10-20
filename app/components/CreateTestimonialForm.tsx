@@ -36,7 +36,7 @@ const CreateTestimonialForm = ({ space, questions }: CreateTesimonialButtonProp)
   useEffect(()=>{
     const fetchData = async ()=>{
       try {
-        const space = await axios.get(`${process.env.NEXTAUTH_URL}/api/space/${spaceName}`, {
+        const space = await axios.get(`/api/space/${spaceName}`, {
           headers: {
             'spaceName': spaceName
           }
@@ -58,7 +58,7 @@ const CreateTestimonialForm = ({ space, questions }: CreateTesimonialButtonProp)
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
-      await axios.post(`${process.env.NEXTAUTH_URL}/api/testimonial`, testimonialData, {
+      await axios.post(`/api/testimonial`, testimonialData, {
         headers: {
           'spaceId': spaceId
         }
