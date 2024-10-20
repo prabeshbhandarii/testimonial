@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 const ScriptDisplay = ({spaceName}: {spaceName: string}) => {
   const [isCopied, setIsCopied] = useState(false);
   
-  const scriptCode = `<iframe height="500px" width="700px" id="example-iframe" src="/pages/wol/${spaceName}"></iframe>`;
+  const scriptCode = `<iframe height="500px" width="700px" id="example-iframe" src="https://testimonial-e28m.vercel.app/pages/wol/${spaceName}"></iframe>`;
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(scriptCode).then(() => {
