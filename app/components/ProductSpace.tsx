@@ -36,7 +36,7 @@ const ProductSpace = () => {
   const sidebarItems = [
     { icon: <Star size={20} />, label: 'All', href: '' },
     { icon: <Award size={20} />, label: 'Featured', href: '' },
-    { icon: <Heart size={20} />, label: 'Embed Wall of Love', href: `/pages/w` },
+    { icon: <Heart size={20} />, label: 'Embed Wall of Love', href: `/pages/w/${spaceName}` },
   ];
 
   useEffect(()=>{
